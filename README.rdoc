@@ -4,13 +4,3 @@ This is the application created while reading the book
 <i><b>Rails Angular Postgres Bootstrap</b>
 Powerful Effective Efficient Full-Stack Web Development</i>
 by David Bryant Copeland
-
-
-
-
-
-
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
