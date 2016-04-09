@@ -19,24 +19,21 @@
   <header>
     <h1 class="h3">Results</h1>
   </header>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
-        <th>Joined</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @customers.each do |customer| %>
-        <tr>
-          <td><%= customer.first_name %></td>
-          <td><%= customer.last_name %></td>
-          <td><%= customer.email %></td>
-          <td><%= l customer.created_at.to_date %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <%= render partial: "pager", locals: { keywords: @keywords, page: @page } %>
+  <ol class="list-group">
+    <% @customers.each do |customer| %>
+      <li class="list-group-item clearfix">
+        <h3 class="pull-right">
+          <small class="text-uppercase">Joined</small>
+          <%= l customer.created_at.to_date %>
+        </h3>
+        <h2 class="h3">
+          <%= customer.first_name %> <%= customer.last_name %>
+          <small><%= customer.username %></small>
+        </h2>
+        <h4><%= customer.email %> </h4>
+      </li>
+    <% end %>
+  </ol>
+  <%= render partial: "pager", locals: { keywords: @keywords, page: @page } %>
 </section>
