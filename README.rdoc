@@ -1,7 +1,7 @@
 = Shine
 
 This is the application created while reading the book
-<i><strong>Rails Angular Postgres Bootstrap</strong>
+<i><b>Rails Angular Postgres Bootstrap</b>
 Powerful Effective Efficient Full-Stack Web Development</i>
 by David Bryant Copeland
 
