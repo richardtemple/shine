@@ -1,39 +1,40 @@
-<header>
-  <h1 class="h2">Customer Search</h1>
-</header>
-<section class="search-form">
-  <%= form_for :customers, method: :get do |f| %>
-    <div class="input-group input-group-lg">
-      <%= label_tag :keywords, nil, class: "sr-only" %>
-      <%= text_field_tag :keywords, nil,
-            placeholder: "First Name, Last Name, or Email Address",
-            class: "form-control input-lg" %>
-      <span class="input-group-btn">
-        <%= submit_tag "Find Customers",
-          class: "btn btn-primary btn-lg" %>
-      </span>
-    </div>
-  <% end %>
-</section>
-<section class="search-results">
+<article ng-app="customers" ng-controller="CustomerSearchController">
   <header>
-    <h1 class="h3">Results</h1>
+    <h1 class="h2">Customer Search</h1>
   </header>
-  <%= render partial: "pager", locals: { keywords: @keywords, page: @page } %>
-  <ol class="list-group">
-    <% @customers.each do |customer| %>
-      <li class="list-group-item clearfix">
+  <section class="search-form">
+    <form>
+      <label for="keywords" class="sr-only">Keywords</label>
+      <input type="text"
+             name="keywords"
+             class="form-control input-lg"
+             placeholder="First Name, Last Name, or Email Address"
+             ng-change="search(keywords)"
+             ng-model="keywords" />
+    </form>
+    <h1 class="searchedFor" ng-if="searchedFor">
+      <small> Searched for:</small> {{searchedFor}}
+    </h1>
+  </section>
+  <section class="search-results">
+    <header>
+      <h1 class="h3">Results</h1>
+    </header>
+    <%= render partial: "pager", locals: { keywords: @keywords, page: @page } %>
+    <ol class="list-group">
+      <li class="list-group-item clearfix"
+          ng-repeat="customer in customers">
         <h3 class="pull-right">
           <small class="text-uppercase">Joined</small>
-          <%= l customer.created_at.to_date %>
+            {{ customer.created_at | date }}
         </h3>
         <h2 class="h3">
-          <%= customer.first_name %> <%= customer.last_name %>
-          <small><%= customer.username %></small>
+          {{ customer.first_name }} {{ customer.last_name }}
+          <small>{{ customer.username }}</small>
         </h2>
-        <h4><%= customer.email %> </h4>
+        <h4>{{ customer.email }} </h4>
       </li>
-    <% end %>
-  </ol>
-  <%= render partial: "pager", locals: { keywords: @keywords, page: @page } %>
-</section>
+    </ol>
+    <%= render partial: "pager", locals: { keywords: @keywords, page: @page } %>
+  </section>
+</article>

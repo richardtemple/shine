@@ -11,40 +11,42 @@ class CustomerSearchTerm
     end
   end
 
-  def build_for_name_search(search_term)
-    @where_clause << case_insensitive_search(:first_name)
-    @where_args[:first_name] = starts_with(search_term)
+  private
 
-    @where_clause << " OR #{case_insensitive_search(:last_name)}"
-    @where_args[:last_name] = starts_with(search_term)
+    def build_for_name_search(search_term)
+      @where_clause << case_insensitive_search(:first_name)
+      @where_args[:first_name] = starts_with(search_term)
 
-    @order = "last_name asc"
-  end
+      @where_clause << " OR #{case_insensitive_search(:last_name)}"
+      @where_args[:last_name] = starts_with(search_term)
 
-  def starts_with(search_term)
-    search_term + "%"
-  end
+      @order = "last_name asc"
+    end
 
-  def case_insensitive_search(field_name)
-    "lower(#{field_name}) like :#{field_name}"
-  end
+    def starts_with(search_term)
+      search_term + "%"
+    end
 
-  def extract_name(email)
-    email.gsub(/@.*$/,'').gsub(/[0-9]+/,'')
-  end
+    def case_insensitive_search(field_name)
+      "lower(#{field_name}) like :#{field_name}"
+    end
 
-  def build_for_email_search(search_term)
-    @where_clause << case_insensitive_search(:first_name)
-    @where_args[:first_name] = starts_with(extract_name(search_term))
+    def extract_name(email)
+      email.gsub(/@.*$/,'').gsub(/[0-9]+/,'')
+    end
 
-    @where_clause << " OR #{case_insensitive_search(:last_name)}"
-    @where_args[:last_name] = starts_with(extract_name(search_term))
+    def build_for_email_search(search_term)
+      @where_clause << case_insensitive_search(:first_name)
+      @where_args[:first_name] = starts_with(extract_name(search_term))
 
-    @where_clause << " OR #{case_insensitive_search(:email)}"
-    @where_args[:email] = search_term
+      @where_clause << " OR #{case_insensitive_search(:last_name)}"
+      @where_args[:last_name] = starts_with(extract_name(search_term))
 
-    @order = "lower(email) = " +
-      ActiveRecord::Base.connection.quote(search_term) +
-      " desc, last_name asc"
-  end
+      @where_clause << " OR #{case_insensitive_search(:email)}"
+      @where_args[:email] = search_term
+
+      @order = "lower(email) = " +
+        ActiveRecord::Base.connection.quote(search_term) +
+        " desc, last_name asc"
+    end
 end
