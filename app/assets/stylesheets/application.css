@@ -14,3 +14,6 @@
  *= require_self
  *= require 'bootstrap-sass-official'
  */
+ .margin-top-none {
+   margin-top: 0;
+ }

@@ -17,8 +17,7 @@ app.controller("CustomerSearchController", [
           $scope.customers = response.data;
       },function(response) {
           alert("There was a problem: " + response.status);
-        }
-      );
+        });
     }
 
     $scope.previousPage = function() {
