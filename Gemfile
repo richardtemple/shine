@@ -38,6 +38,7 @@ group :development, :test do
   gem 'poltergeist'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
+  gem 'teaspoon-jasmine'
 end
 
 group :development do
