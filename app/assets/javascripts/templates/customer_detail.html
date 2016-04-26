@@ -1,14 +1,8 @@
-<article class="customer-details">
-  <h1>Customer {{customer.id}}</h1>
-  <h2>{{customer.first_name}} {{customer.last_name}}</h2>
-  <h3>{{customer.email}}</h3>
-  <h4>{{customer.username}}</h4>
-  <h5>
-    <small class="text-uppercase">Joined</small>
-    {{customer.created_at | date}}
-  </h5>
-</article>
-<aside class="sr-only loading-progress">
-  <span ng-if="loading" class="loading">Loading</span>
-  <span ng-if="!loading" class="not-loading">Done Loading</span>
-</aside>
+<form><div class="row">
+  <div class="col-md-6">
+    <h1>Customer</h1>
+  </div>
+  <div class="col-md-6">
+    <h1>Billing Info</h1>
+  </div>
+</div></form>
