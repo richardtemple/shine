@@ -2,6 +2,7 @@ var app = angular.module(
   'customers',
   [
     'ngRoute',
+    'ngResource',
     'templates'
   ]
 );
@@ -64,21 +65,30 @@ app.controller("CustomerSearchController", [
 ]);
 
 app.controller("CustomerDetailController", [
-          "$scope","$http","$routeParams",
-  function($scope , $http , $routeParams) {
+          "$scope","$routeParams","$resource",
+  function($scope , $routeParams,  $resource) {
 
     // Make the Ajax call and set $scope.customer...
 
     var customerId = $routeParams.id;
-    $scope.customer = {};
+    var Customer = $resource('/customers/:customerId.json');
+    $scope.customer = Customer.get({ "customerId": customerId});
+    //alert("Ajax Call Initiated!");
+    // $http.get(
+    //   "/customers/" + customerId + ".json"
+    // ).then(function(response) {
+    //     $scope.customer = response.data;
+    //   },function(response) {
+    //     alert("There was a problem: " + response.status);
+    //   }
+    // );
+  }
+]);
 
-    $http.get(
-      "/customers/" + customerId + ".json"
-    ).then(function(response) {
-        $scope.customer = response.data;
-      },function(response) {
-        alert("There was a problem: " + response.status);
-      }
-    );
+app.controller("CustomerCreditCardController", [
+          "$scope","$resource",
+  function($scope,  $resource) {
+    var CreditCardInfo = $resource('/fake_billing.json')
+    $scope.creditCard = CreditCardInfo.get({ "cardholder_id": 1234})
   }
 ]);

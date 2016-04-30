@@ -11,14 +11,14 @@
               <div class="form-group">
                 <label class="sr-only" for="first-name">First Name</label>
                 <input type="text" class="form-control"
-                       name="first-name" value="Bob">
+                       name="first-name" ng-model="customer.first_name">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label class="sr-only" for="last-name">Last Name</label>
                 <input type="text" class="form-control"
-                       name="last-name" value="Jones">
+                       name="last-name" ng-model="customer.last_name">
               </div>
             </div>
             <div class="col-md-4">
@@ -27,7 +27,7 @@
                 <div class="input-group">
                   <div class="input-group-addon">@</div>
                   <input type="text" class="form-control"
-                         name="username" value="bobert123">
+                         name="username" ng-model="customer.username">
                 </div>
               </div>
             </div>
@@ -35,11 +35,12 @@
           <div class="form-group">
             <label class="sr-only" for="email">Email</label>
             <input type="text" class="form-control"
-                   name="email" value="bobbyj@somewhere.net">
+                   name="email" ng-model="customer.email">
           </div>
         </section>
         <footer class="panel-footer">
-          <label for="joined">Joined</label> 12/13/2014
+          <label for="joined">Joined</label>
+          {{ customer.joined_at | date }}
         </footer>
       </article>
       <article class="panel panel-default">
@@ -93,21 +94,36 @@
           <h2 class="h4">Billing Info</h2>
         </header>
         <section class="panel-body">
-          <article>
+          <article ng-controller="CustomerCreditCardController">
             <div class="row">
-              <div class="col-md-7">
+              <div ng-if="!creditCard.$resolved">
+                <div class="col-md-10 col-md-offset-1">
+                  <aside class="progress">
+                    <div class="progress-bar progress-bar-striped active"
+                         style="width: 100%">
+                      Loading...
+                    </div>
+                  </aside>
+                </div>
+              </div>
+
+              <div ng-if="creditCard.$resolved" class="col-md-7">
                 <p class="h4">
-                  ****-****-****-1234
-                  <span class="label label-success">VISA</span>
+                  ****-****-****-{{ creditCard.lastFour }}
+                  <span class="label label-success">
+                    {{ creditCard.cardType }}
+                  </span>
                 </p>
                 <p class="h5">
-                  <label>Expires:</label> 04/19
+                  <label>Expires:</label>
+                  {{ creditCard.expirationMonth }}/{{ creditCard.expirationYear }}
                 </p>
               </div>
               <div class="col-md-5 text-right">
-                <button class="btn btn-lg btn-default">
+                <a href="{{creditCard.detailsLink}}"
+                  class="btn btn-lg btn-default">
                   View Details...
-                </button>
+                </a>
               </div>
             </div>
           </article>
