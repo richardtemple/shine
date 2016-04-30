@@ -70,9 +70,9 @@ app.controller("CustomerDetailController", [
 
     // Make the Ajax call and set $scope.customer...
 
-    var customerId = $routeParams.id;
+    $scope.customerId = $routeParams.id;
     var Customer = $resource('/customers/:customerId.json');
-    $scope.customer = Customer.get({ "customerId": customerId});
+    $scope.customer = Customer.get({ "customerId": $scope.customerId});
     //alert("Ajax Call Initiated!");
     // $http.get(
     //   "/customers/" + customerId + ".json"
@@ -89,6 +89,10 @@ app.controller("CustomerCreditCardController", [
           "$scope","$resource",
   function($scope,  $resource) {
     var CreditCardInfo = $resource('/fake_billing.json')
-    $scope.creditCard = CreditCardInfo.get({ "cardholder_id": 1234})
+    $scope.setCardholderId = function(cardholderId){
+      $scope.creditCard = CreditCardInfo.get(
+        { "cardholder_id": cardholderId}
+      )
+    }
   }
 ]);

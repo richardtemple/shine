@@ -94,7 +94,8 @@
           <h2 class="h4">Billing Info</h2>
         </header>
         <section class="panel-body">
-          <article ng-controller="CustomerCreditCardController">
+          <article ng-controller="CustomerCreditCardController"
+                   ng-init="setCardholderId(customerId)">
             <div class="row">
               <div ng-if="!creditCard.$resolved">
                 <div class="col-md-10 col-md-offset-1">

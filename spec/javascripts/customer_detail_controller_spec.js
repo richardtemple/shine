@@ -36,6 +36,5 @@ describe("CustomerDetailController", function() {
       httpBackend.flush();
       expect(scope.customer).toEqualData(customer);
     });
-
   });
 });
