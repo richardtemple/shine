@@ -3,6 +3,7 @@ var app = angular.module(
   [
     'ngRoute',
     'ngResource',
+    'ngMessages',
     'templates'
   ]
 );
@@ -68,20 +69,32 @@ app.controller("CustomerDetailController", [
           "$scope","$routeParams","$resource",
   function($scope , $routeParams,  $resource) {
 
-    // Make the Ajax call and set $scope.customer...
-
     $scope.customerId = $routeParams.id;
-    var Customer = $resource('/customers/:customerId.json');
+    var Customer = $resource('/customers/:customerId.json',
+                             {"customerId": "@customer_id"},
+                             { "save": { "method": "PUT" }});
     $scope.customer = Customer.get({ "customerId": $scope.customerId});
-    //alert("Ajax Call Initiated!");
-    // $http.get(
-    //   "/customers/" + customerId + ".json"
-    // ).then(function(response) {
-    //     $scope.customer = response.data;
-    //   },function(response) {
-    //     alert("There was a problem: " + response.status);
-    //   }
-    // );
+
+    $scope.customer.billingSameAsShipping = false;
+    $scope.$watch('customer.billing_address_id',function() {
+      $scope.customer.billingSameAsShipping =
+        $scope.customer.billing_address_id ==
+          $scope.customer.shipping_address_id;
+    });
+    $scope.save = function() {
+      if ($scope.form.$valid) {
+        $scope.customer.$save(
+          function() {
+            $scope.form.$setPristine();
+            $scope.form.$setUntouched();
+            alert("Save Successful!");
+          },
+          function() {
+            alert("Save Failed :(");
+          }
+        );
+      }
+    }
   }
 ]);
 

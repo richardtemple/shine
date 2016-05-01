@@ -1,43 +1,69 @@
-<form novalidate>
+<form novalidate name="form">
   <div class="row">
     <div class="col-md-6">
       <article class="panel panel-primary">
         <header class="panel-heading">
-          <h1 class="h3">Customer</h1>
+          <h1 class="h3">
+            Customer
+          </h1>
         </header>
         <section class="panel-body">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-group">
-                <label class="sr-only" for="first-name">First Name</label>
-                <input type="text" class="form-control" required
-                       name="first_name" ng-model="customer.first_name">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label class="sr-only" for="last-name">Last Name</label>
-                <input type="text" class="form-control" required
-                       name="last_name" ng-model="customer.last_name">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label class="sr-only" for="username">UserName</label>
-                <div class="input-group">
-                  <div class="input-group-addon">@</div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group has-feedback" ng-class="{
+                    'has-error': form.first_name.$invalid && form.first_name.$dirty,
+                  'has-success': form.first_name.$valid   && form.first_name.$touched
+                }">
+                  <label class="sr-only" for="first-name">
+                    First Name
+                  </label>
                   <input type="text" class="form-control" required
-                         name="username" ng-model="customer.username">
+                         name="first_name" ng-model="customer.first_name">
+                  <p class="help-block" ng-messages="form.first_name.$error">
+                    <span ng-message="required">First Name is required</span>
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="sr-only" for="last-name">Last Name</label>
+                  <input type="text" class="form-control"  required
+                         name="last_name" ng-model="customer.last_name">
+                  <p class="help-block" ng-messages="form.last_name.$error">
+                    <span ng-message="required">Last Name is required</span>
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="sr-only" for="username">Username</label>
+                  <div class="input-group">
+                    <div class="input-group-addon">@</div>
+                    <input type="text" class="form-control" required
+                           name="username" ng-model="customer.username">
+                  </div>
+                  <p class="help-block" ng-messages="form.username.$error">
+                    <span ng-message="required">Username is required</span>
+                  </p>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label class="sr-only" for="email">Email</label>
-            <input type="email" class="form-control" required
-                   name="email" ng-model="customer.email">
-          </div>
-        </section>
+            <div class="form-group has-feedback" ng-class="{
+                'has-error': form.email.$invalid && form.email.$dirty,
+              'has-success': form.email.$valid   && form.email.$touched
+            }">
+
+    <!-- form markup from before... -->
+
+    <label class="sr-only" for="email">Email</label>
+    <input type="email" class="form-control" required
+           name="email" ng-model="customer.email">
+    <p class="help-block" ng-messages="form.email.$error">
+      <span ng-message="required">Email is required</span>
+      <span ng-message="email">Email must look like an email</span>
+    </p>
+  </div>
+      </section>
         <footer class="panel-footer">
           <label for="joined">Joined</label>
           {{ customer.joined_at | date }}
@@ -45,122 +71,31 @@
       </article>
       <article class="panel panel-default">
         <header class="panel-heading">
-          <h2 class="h4">Shipping Address</h2>
+          <h2 class="h4">
+            Shipping Address
+          </h2>
         </header>
         <section class="panel-body">
-          <div class="form-group">
-            <label class="sr-only" for="street-address">
-              StreetAddress
-            </label>
-            <input type="text" class="form-control" required
-                   name="street-address" value="123 Any St">
-          </div>
-          <div class="form-group">
-            <label class="sr-only" for="street-address-extra">
-              Street Address Extra
-            </label>
-            <input type="text" class="form-control"
-                   name="street-address-extra" value="Unit 101">
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="sr-only" for="city">City</label>
-                <input type="text" class="form-control" required
-                       name="city" value="Washington">
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label class="sr-only" for="state">State</label>
-                <input type="text" class="form-control"
-                       required pattern="[A-Z][A-Z]"
-                       name="state" value="DC">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label class="sr-only" for="zip">Zip</label>
-                <input type="text" class="form-control"
-                       required pattern="\d\d\d\d\d"
-                       name="zip" value="20001">
-              </div>
-            </div>
-          </div>
-        </section>
-      </article>
-    </div>
-    <div class="col-md-6">
-      <article class="panel panel-default">
-        <header class="panel-heading">
-          <h2 class="h4">Billing Info</h2>
-        </header>
-        <section class="panel-body">
-          <article ng-controller="CustomerCreditCardController"
-                   ng-init="setCardholderId(customerId)">
-            <div class="row">
-              <div ng-if="!creditCard.$resolved">
-                <div class="col-md-10 col-md-offset-1">
-                  <aside class="progress">
-                    <div class="progress-bar progress-bar-striped active"
-                         style="width: 100%">
-                      Loading...
-                    </div>
-                  </aside>
-                </div>
-              </div>
-
-              <div ng-if="creditCard.$resolved" class="col-md-7">
-                <p class="h4">
-                  ****-****-****-{{ creditCard.lastFour }}
-                  <span class="label label-success">
-                    {{ creditCard.cardType }}
-                  </span>
-                </p>
-                <p class="h5">
-                  <label>Expires:</label>
-                  {{ creditCard.expirationMonth }}/{{ creditCard.expirationYear }}
-                </p>
-              </div>
-              <div class="col-md-5 text-right">
-                <a href="{{creditCard.detailsLink}}"
-                  class="btn btn-lg btn-default">
-                  View Details...
-                </a>
-              </div>
-            </div>
-          </article>
-          <hr>
-          <article class="well well-sm">
-            <header>
-              <h1 class="h5">
-                Billing Address
-                <small>
-                  <input type="checkbox"> Same as shipping?
-                </small>
-              </h1>
-            </header>
-
             <div class="form-group">
               <label class="sr-only" for="street-address">
-                StreetAddress
+                Street Address
               </label>
               <input type="text" class="form-control" required
-                     name="street-address" value="123 Any St">
-            </div>
-            <div class="form-group">
-              <label class="sr-only" for="street-address-extra">
-                Street Address Extra
-              </label>
-              <input type="text" class="form-control"
-                     name="street-address-extra" value="Unit 101">
+                     name="shippingStreet"
+                     ng-model="customer.shipping_street">
+              <p class="help-block" ng-messages="form.shippingStreet.$error">
+                <span ng-message="required">Street is required</span>
+              </p>
             </div>
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="sr-only" for="city">City</label>
                   <input type="text" class="form-control" required
-                         name="city" value="Washington">
+                         name="shippingCity" ng-model="customer.shipping_city">
+                  <p class="help-block" ng-messages="form.shippingCity.$error">
+                    <span ng-message="required">City is required</span>
+                  </p>
                 </div>
               </div>
               <div class="col-md-2">
@@ -168,25 +103,155 @@
                   <label class="sr-only" for="state">State</label>
                   <input type="text" class="form-control"
                          required pattern="[A-Z][A-Z]"
-                         name="state" value="DC">
+                         name="shippingState" ng-model="customer.shipping_state">
+                  <p class="help-block" ng-messages="form.shippingState.$error">
+                    <span ng-message="required">State is required</span>
+                    <span ng-message="pattern">State must look like a two-letter state code</span>
+                  </p>
                 </div>
               </div>
               <div class="col-md-4">
-                <div class="form-group">
-                  <label class="sr-only" for="zip">Zip</label>
+                <div class="form-group has-feedback" ng-class="{
+                    'has-error': form.shippingZip.$invalid && form.shippingZip.$dirty,
+                  'has-success': form.shippingZip.$valid   && form.shippingZip.$touched
+                }">
+                  <label class="sr-only" for="shippingZip">Zip</label>
                   <input type="text" class="form-control"
                          required pattern="\d\d\d\d\d"
-                         name="zip" value="20001">
+                         name="shippingZip" ng-model="customer.shipping_zipcode">
+                  <p class="help-block" ng-messages="form.shippingZip.$error">
+                    <span ng-message="required">Zip is required</span>
+                    <span ng-message="pattern">Zip must be five digits</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+        </section>
+      </article>
+    </div>
+    <div class="col-md-6 billing-info">
+      <article class="panel panel-default">
+
+        <!-- billing info markup -->
+
+        <header class="panel-heading">
+          <h2 class="h4">
+            Billing Info
+          </h2>
+        </header>
+        <section class="panel-body">
+          <article
+            ng-controller="CustomerCreditCardController"
+            ng-init="setCardholderId(customerId)">
+            <div class="row">
+              <div ng-if="!creditCard.$resolved">
+
+                <!-- loading animation will go here -->
+
+                <div class="col-md-10 col-md-offset-1">
+                  <aside class="progress">
+                    <div class="progress-bar progress-bar-striped active"
+                         style="width: 100%">
+                      Loading…
+                    </div>
+                  </aside>
+                </div>
+              </div>
+              <div ng-if="creditCard.$resolved">
+
+                <!-- Credit Card info component -->
+
+                <div class="col-md-7">
+                  <p class="h4">
+                    ****-****-****-{{creditCard.lastFour}}
+                    <span class="label label-success">
+                      {{creditCard.cardType}}
+                    </span>
+                  </p>
+                  <p class="h5">
+                    <label>Expires:</label>
+                    {{creditCard.expirationMonth}}/{{creditCard.expirationYear}}
+                  </p>
+                </div>
+                <div class="col-md-5 text-right">
+                  <a href="{{creditCard.detailsLink}}"
+                    class="btn btn-lg btn-default">
+                    View Details…
+                  </a>
                 </div>
               </div>
             </div>
           </article>
+
+          <hr>
+          <article class="well well-sm">
+            <header>
+              <h1 class="h5">
+                Billing Address
+                <small>
+                  <input type="checkbox"
+                         ng-model="customer.billingSameAsShipping">
+                  Same as shipping?
+                </small>
+              </h1>
+            </header>
+            <form ng-if="!customer.billingSameAsShipping">
+
+              <!-- rest of the form... -->
+
+              <div class="form-group">
+                <label class="sr-only" for="street-address">
+                  Street Address
+                </label>
+                <input type="text" class="form-control" required
+                       name="billingStreet" ng-model="customer.billing_street">
+                <p class="help-block" ng-messages="form.billingStreet.$error">
+                  <span ng-message="required">Street is required</span>
+                </p>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="sr-only" for="city">City</label>
+                    <input type="text" class="form-control" required
+                           name="billingCity" ng-model="customer.billing_city">
+                    <p class="help-block" ng-messages="form.billingCity.$error">
+                      <span ng-message="required">City is required</span>
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="sr-only" for="state">State</label>
+                    <input type="text" class="form-control" required pattern="[A-Z][A-Z]"
+                           name="billingState" ng-model="customer.billing_state">
+                    <p class="help-block" ng-messages="form.billingState.$error">
+                      <span ng-message="required">State is required</span>
+                      <span ng-message="pattern">State must look like a two-letter state code</span>
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="sr-only" for="zip">Zip</label>
+                    <input type="text" class="form-control" required pattern="\d\d\d\d\d"
+                           name="billingZip" ng-model="customer.billing_zipcode">
+                    <p class="help-block" ng-messages="form.billingZip.$error">
+                      <span ng-message="required">Zip is required</span>
+                      <span ng-message="pattern">Zip must be five digits</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+          </article>
         </section>
       </article>
       <div class="text-right">
-        <button ng-click="save()" class="btn btn-lg btn-primary">
-          Save Changes
-        </button>
+        <button ng-click="save()"
+                class="btn btn-lg btn-primary"
+                ng-disabled="form.$invalid || form.$pristine">
+        Save Changes
+      </button>
       </div>
     </div>
   </div>

@@ -22,9 +22,14 @@ class CustomersController < ApplicationController
 
   def show
     customer_detail = CustomerDetail.find(params[:id])
-    sleep 2
     respond_to do |format|
       format.json { render json: customer_detail }
     end
+  end
+
+  def update
+    customer_detail = CustomerDetail.find(params[:id])
+    customer_detail.update(params)
+    head :ok
   end
 end
