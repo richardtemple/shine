@@ -1,4 +1,4 @@
-<form>
+<form novalidate>
   <div class="row">
     <div class="col-md-6">
       <article class="panel panel-primary">
@@ -10,15 +10,15 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label class="sr-only" for="first-name">First Name</label>
-                <input type="text" class="form-control"
-                       name="first-name" ng-model="customer.first_name">
+                <input type="text" class="form-control" required
+                       name="first_name" ng-model="customer.first_name">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label class="sr-only" for="last-name">Last Name</label>
-                <input type="text" class="form-control"
-                       name="last-name" ng-model="customer.last_name">
+                <input type="text" class="form-control" required
+                       name="last_name" ng-model="customer.last_name">
               </div>
             </div>
             <div class="col-md-4">
@@ -26,7 +26,7 @@
                 <label class="sr-only" for="username">UserName</label>
                 <div class="input-group">
                   <div class="input-group-addon">@</div>
-                  <input type="text" class="form-control"
+                  <input type="text" class="form-control" required
                          name="username" ng-model="customer.username">
                 </div>
               </div>
@@ -34,7 +34,7 @@
           </div>
           <div class="form-group">
             <label class="sr-only" for="email">Email</label>
-            <input type="text" class="form-control"
+            <input type="email" class="form-control" required
                    name="email" ng-model="customer.email">
           </div>
         </section>
@@ -52,7 +52,7 @@
             <label class="sr-only" for="street-address">
               StreetAddress
             </label>
-            <input type="text" class="form-control"
+            <input type="text" class="form-control" required
                    name="street-address" value="123 Any St">
           </div>
           <div class="form-group">
@@ -66,7 +66,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="sr-only" for="city">City</label>
-                <input type="text" class="form-control"
+                <input type="text" class="form-control" required
                        name="city" value="Washington">
               </div>
             </div>
@@ -74,6 +74,7 @@
               <div class="form-group">
                 <label class="sr-only" for="state">State</label>
                 <input type="text" class="form-control"
+                       required pattern="[A-Z][A-Z]"
                        name="state" value="DC">
               </div>
             </div>
@@ -81,6 +82,7 @@
               <div class="form-group">
                 <label class="sr-only" for="zip">Zip</label>
                 <input type="text" class="form-control"
+                       required pattern="\d\d\d\d\d"
                        name="zip" value="20001">
               </div>
             </div>
@@ -143,7 +145,7 @@
               <label class="sr-only" for="street-address">
                 StreetAddress
               </label>
-              <input type="text" class="form-control"
+              <input type="text" class="form-control" required
                      name="street-address" value="123 Any St">
             </div>
             <div class="form-group">
@@ -157,7 +159,7 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="sr-only" for="city">City</label>
-                  <input type="text" class="form-control"
+                  <input type="text" class="form-control" required
                          name="city" value="Washington">
                 </div>
               </div>
@@ -165,6 +167,7 @@
                 <div class="form-group">
                   <label class="sr-only" for="state">State</label>
                   <input type="text" class="form-control"
+                         required pattern="[A-Z][A-Z]"
                          name="state" value="DC">
                 </div>
               </div>
@@ -172,6 +175,7 @@
                 <div class="form-group">
                   <label class="sr-only" for="zip">Zip</label>
                   <input type="text" class="form-control"
+                         required pattern="\d\d\d\d\d"
                          name="zip" value="20001">
                 </div>
               </div>
@@ -179,6 +183,11 @@
           </article>
         </section>
       </article>
+      <div class="text-right">
+        <button ng-click="save()" class="btn btn-lg btn-primary">
+          Save Changes
+        </button>
+      </div>
     </div>
   </div>
 </form>
